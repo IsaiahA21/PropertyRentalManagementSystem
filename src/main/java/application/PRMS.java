@@ -4,8 +4,11 @@ import presentation.View;
 
 public class PRMS {
     public static void main(String [] args){
-        DatabaseModel test = new DatabaseModel();
-        View test1 = new View();
-        System.out.println("hello there");
+        View view = new View();
+        DatabaseModel model = new DatabaseModel();
+
+        Controller controller = new Controller(model,view);
+
+        view.setVisible(true);
     }
 }
