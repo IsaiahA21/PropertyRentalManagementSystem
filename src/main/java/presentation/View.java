@@ -17,6 +17,7 @@ public class View extends JFrame {
         this.setSize(600,600);
         panel.add(title);
         panel.add(button);
+        panel.add(testField);
 
 
         this.add(panel); //add panel to frame (view is the JFrame)
