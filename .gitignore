@@ -7,3 +7,5 @@
 
 # Log file
 *.log
+
+bin/
