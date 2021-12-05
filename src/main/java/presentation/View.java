@@ -1,5 +1,8 @@
 package presentation;
+import application.*;
 
 public class View {
-    System.out.println("hello");
+    public View() {
+        System.out.println("hello");
+    }
 }
