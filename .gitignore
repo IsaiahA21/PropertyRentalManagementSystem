@@ -2,3 +2,8 @@
 /.gradle/
 /build/
 /build/classes/java/main/
+# Compiled class file
+*.class
+
+# Log file
+*.log
