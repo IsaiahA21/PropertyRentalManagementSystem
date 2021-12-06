@@ -12,6 +12,7 @@ import database.users.User;
 public class DatabaseModel {
     private Properties properties;
     private User user;
+    private static int id;
 
 
 
@@ -20,6 +21,10 @@ public class DatabaseModel {
     private static DBCollection userCollection;
     private static DBCollection propertiesCollection;
     public DatabaseModel(){
+        //
+        id = 0;
+
+
         connectToDatabase();
 
 
@@ -40,4 +45,16 @@ public class DatabaseModel {
         MongoClient mongoClient = MongoClients.create(settings);
         MongoDatabase database = mongoClient.getDatabase("test");*/
     }
+
+    void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
+
+        testCol.insertOne(convertProperty(new Property(id++, landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
+    }
+
+    public static Document convertProperty(Property prop){
+        return new Document("ID", new ObjectId()).append("STATUS", prop.getStatus()).append("LANDLORD",prop.getLandlord()).append("PAYEDFOR", prop.isPayedFor()).append("OUTSTANDINGFEE", prop.getOutstandingFee()).append("NUMBEDROOMS", prop.getNumBedrooms()).append("NUMBATHROOMS", prop.getNumBathrooms()).append("FURNISHED",prop.isFurnished()).append("PROPERTYTPYE", prop.getPropertyType()).append("PRICE", prop.getPrice());
+
+    }
+
+
 }
