@@ -14,6 +14,7 @@ import database.properties.*;
 import database.users.*;
 import org.bson.types.ObjectId;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseModel {
-    private Properties properties;
     private User user;
 
     private MongoClient mongoClient;
@@ -51,13 +51,17 @@ public class DatabaseModel {
         Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
         mongoLogger.setLevel(Level.SEVERE);
 
-        String uri = "mongodb+srv://jacob_artuso:123pass123@prms.vrama.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+        String uri = "mongodb+srv://jacob_artuso:123pass123@prms.vrama.mongodb.net/prms?retryWrites=true&w=majority";
         try {
             mongoClient = MongoClients.create(uri);
             database = mongoClient.getDatabase("PRMS");
             propertiesCollection = database.getCollection("properties");
             userCollection = database.getCollection("users");
-            addProperty("dave@gmail.com",2,4,false,"condo",20000);
+            /*addProperty("dave@gmail.com",2,4,false,"condo",20000);
+
+            addProperty("dave@gmail.com",3,2,true,"condo",20000);
+
+            addProperty("dave@gmail.com",2,4,false,"townhouse",29000);*/
             addUser(1,"jacob@gmail.com","Jacob Art","password12");
             addUser(2,"dave@gmail.com","Dave Duart","pass12");
             addUser(3,"stuart@gmail.com","Stuart Lee","managerpass");
@@ -65,12 +69,14 @@ public class DatabaseModel {
 
         }catch (MongoException me){
             System.err.println("database error");
+            System.exit(-1);
         }
 
 
     }
 
-    void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
+
+    public void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
 
         propertiesCollection.insertOne(convertProperty(new Property(new ObjectId().toString(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
     }
@@ -80,7 +86,11 @@ public class DatabaseModel {
 
     }
 
-    User login(String email, String password){
+    public void setUser(String email, String password) {
+        this.user = login(email,password);
+    }
+
+    private User login(String email, String password){
         //verify with database
         Document query = new Document("$and", Arrays.asList(
                 new Document("EMAIL", email),
@@ -109,15 +119,18 @@ public class DatabaseModel {
         return userCollection.find(query).first() != null;
     }
 
-    void unregistedLogin(){
+    public void unregistedLogin(){
         user = new RegularRenter();
     }
 
-    public ArrayList<Property> search(){
+    public ArrayList<Property> search(ArrayList<String> criteriaStrings){
+        List<Document> criteria = new ArrayList<>();
+        //criteria.add(new Document(""))
+        Document search = new Document("$and",criteria);
         return new ArrayList<>();
     }
 
-    void addUser(int accessLevel, String email, String name, String password){
+    public void addUser(int accessLevel, String email, String name, String password){
         if(userExists(email)){
             return;
         }
@@ -139,6 +152,7 @@ public class DatabaseModel {
     public static Document convertUser(RegisteredUser user){
         return new Document("_id", new ObjectId()).append("TYPE",user.getAccessLevel()).append("NAME",user.getName()).append("EMAIL", user.getEmail()).append("PASSWORD",user.getPassword());
     }
+
 
 
 

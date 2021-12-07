@@ -25,4 +25,17 @@ public class Controller {
             System.out.println("button was pressed");
         }
     }
+    public class loginButton implements ActionListener{
+        public void actionPerformed(ActionEvent ae){
+            String email = "jacob@gmail.com";//we should retrieve from view
+            String password = "password12";//we should also retrive from view
+
+            model.setUser(email,password);
+        }
+    }
+    public class skipLoginButton implements ActionListener{
+        public void actionPerformed(ActionEvent ae){
+            model.unregistedLogin();
+        }
+    }
 }
