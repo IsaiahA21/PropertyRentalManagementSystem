@@ -2,14 +2,12 @@ package database.users;
 
 public abstract class RegisteredUser extends User{
     private String email;
-    private String name;
     private String password;
 
 
-    protected RegisteredUser(String email, String name, String password, int accessLevel) {
+    protected RegisteredUser(String email,  String password, int accessLevel) {
         super(accessLevel);
         this.email = email;
-        this.name = name;
         this.password = password;
     }
 
@@ -21,13 +19,6 @@ public abstract class RegisteredUser extends User{
         this.email = email;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getPassword() {
         return password;

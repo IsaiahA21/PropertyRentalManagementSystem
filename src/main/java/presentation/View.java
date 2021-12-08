@@ -1,5 +1,8 @@
 package presentation;
+import javax.swing.*;
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.Objects;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -63,18 +66,18 @@ String usertype = "Regular";
         EmailRegisterField = new javax.swing.JTextField();
         EmailRegisterText = new javax.swing.JLabel();
         PasswordRegisterText = new javax.swing.JLabel();
-        RegisterRegisterButton = new javax.swing.JButton();
+        RegisterNewUserButton = new javax.swing.JButton();
         ResetRegisterButton = new javax.swing.JButton();
         ComboRegisterBox = new javax.swing.JComboBox<>();
         AccountRegisterType = new javax.swing.JLabel();
         PasswordRegisterField = new javax.swing.JPasswordField();
         ChangeFeesPage = new javax.swing.JFrame();
         BackFees = new javax.swing.JButton();
-        AdminDashboardPage = new javax.swing.JFrame();
-        AdminDashboardText = new javax.swing.JLabel();
-        GoMainPageAdminButton = new javax.swing.JButton();
-        EditListingsAdminButton = new javax.swing.JButton();
-        ChnageFeesButton = new javax.swing.JButton();
+        ManagerDashboardPage = new javax.swing.JFrame();
+        ManagerDashboardText = new javax.swing.JLabel();
+        GoMainPageManagerButton = new javax.swing.JButton();
+        EditListingsManagerButton = new javax.swing.JButton();
+        ChangeFeesButton = new javax.swing.JButton();
         RequestSummmaryButton = new javax.swing.JButton();
         LandlordDashboardPage = new javax.swing.JFrame();
         LandlordDashboardTitle = new javax.swing.JLabel();
@@ -90,7 +93,7 @@ String usertype = "Regular";
         PasswordField = new javax.swing.JPasswordField();
         LoginButton = new javax.swing.JButton();
         ResetButton = new javax.swing.JButton();
-        EditListingPageAdmin = new javax.swing.JFrame();
+        EditListingPageManager = new javax.swing.JFrame();
         BackAEditListings = new javax.swing.JButton();
         LoginHomeButton = new javax.swing.JToggleButton();
         RegisterHomeButton = new javax.swing.JToggleButton();
@@ -342,12 +345,12 @@ String usertype = "Regular";
 
         PasswordRegisterText.setText("Password");
 
-        RegisterRegisterButton.setText("Register");
-        RegisterRegisterButton.addActionListener(new java.awt.event.ActionListener() {
+        RegisterNewUserButton.setText("Register");
+        /*RegisterNewUserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterRegisterButtonActionPerformed(evt);
+                RegisterNewUserButtonActionPerformed(evt);
             }
-        });
+        });*/
 
         ResetRegisterButton.setText("Reset");
         ResetRegisterButton.addActionListener(new java.awt.event.ActionListener() {
@@ -356,7 +359,7 @@ String usertype = "Regular";
             }
         });
 
-        ComboRegisterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Landlord", "Admin" }));
+        ComboRegisterBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Renter", "Landlord", "Manager" }));
         ComboRegisterBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboRegisterBoxActionPerformed(evt);
@@ -379,7 +382,7 @@ String usertype = "Regular";
                 .addContainerGap(120, Short.MAX_VALUE)
                 .addGroup(RegisterPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, RegisterPageLayout.createSequentialGroup()
-                        .addComponent(RegisterRegisterButton)
+                        .addComponent(RegisterNewUserButton)
                         .addGap(100, 100, 100)
                         .addComponent(ResetRegisterButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, RegisterPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -419,7 +422,7 @@ String usertype = "Regular";
                     .addComponent(AccountRegisterType))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(RegisterPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(RegisterRegisterButton)
+                    .addComponent(RegisterNewUserButton)
                     .addComponent(ResetRegisterButton))
                 .addGap(42, 42, 42))
         );
@@ -448,56 +451,56 @@ String usertype = "Regular";
                 .addContainerGap(269, Short.MAX_VALUE))
         );
 
-        AdminDashboardText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        AdminDashboardText.setText("Admin Dashboard");
+        ManagerDashboardText.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        ManagerDashboardText.setText("Manager Dashboard");
 
-        GoMainPageAdminButton.setText("Go to Main Page");
-        GoMainPageAdminButton.addActionListener(new java.awt.event.ActionListener() {
+        GoMainPageManagerButton.setText("Go to Main Page");
+        GoMainPageManagerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GoMainPageAdminButtonActionPerformed(evt);
+                GoMainPageManagerButtonActionPerformed(evt);
             }
         });
 
-        EditListingsAdminButton.setText("Edit Listings");
-        EditListingsAdminButton.addActionListener(new java.awt.event.ActionListener() {
+        EditListingsManagerButton.setText("Edit Listings");
+        EditListingsManagerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditListingsAdminButtonActionPerformed(evt);
+                EditListingsManagerButtonActionPerformed(evt);
             }
         });
 
-        ChnageFeesButton.setText("Change Fees");
+        ChangeFeesButton.setText("Change Fees");
 
         RequestSummmaryButton.setText("Request Summary");
 
-        javax.swing.GroupLayout AdminDashboardPageLayout = new javax.swing.GroupLayout(AdminDashboardPage.getContentPane());
-        AdminDashboardPage.getContentPane().setLayout(AdminDashboardPageLayout);
-        AdminDashboardPageLayout.setHorizontalGroup(
-            AdminDashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AdminDashboardPageLayout.createSequentialGroup()
+        javax.swing.GroupLayout ManagerDashboardPageLayout = new javax.swing.GroupLayout(ManagerDashboardPage.getContentPane());
+        ManagerDashboardPage.getContentPane().setLayout(ManagerDashboardPageLayout);
+        ManagerDashboardPageLayout.setHorizontalGroup(
+            ManagerDashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ManagerDashboardPageLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(GoMainPageAdminButton)
+                .addComponent(GoMainPageManagerButton)
                 .addGap(18, 18, 18)
-                .addComponent(EditListingsAdminButton)
+                .addComponent(EditListingsManagerButton)
                 .addGap(18, 18, 18)
-                .addComponent(ChnageFeesButton)
+                .addComponent(ChangeFeesButton)
                 .addGap(26, 26, 26)
                 .addComponent(RequestSummmaryButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AdminDashboardPageLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ManagerDashboardPageLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(AdminDashboardText, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ManagerDashboardText, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(119, 119, 119))
         );
-        AdminDashboardPageLayout.setVerticalGroup(
-            AdminDashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AdminDashboardPageLayout.createSequentialGroup()
+        ManagerDashboardPageLayout.setVerticalGroup(
+            ManagerDashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ManagerDashboardPageLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(AdminDashboardText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ManagerDashboardText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100)
-                .addGroup(AdminDashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GoMainPageAdminButton)
-                    .addComponent(EditListingsAdminButton)
-                    .addComponent(ChnageFeesButton)
+                .addGroup(ManagerDashboardPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(GoMainPageManagerButton)
+                    .addComponent(EditListingsManagerButton)
+                    .addComponent(ChangeFeesButton)
                     .addComponent(RequestSummmaryButton))
                 .addContainerGap(126, Short.MAX_VALUE))
         );
@@ -576,11 +579,11 @@ String usertype = "Regular";
 
         LoginButton.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         LoginButton.setText("Login");
-        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+        /*LoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoginButtonActionPerformed(evt);
             }
-        });
+        });*/
 
         ResetButton.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         ResetButton.setText("Reset");
@@ -645,18 +648,18 @@ String usertype = "Regular";
             }
         });
 
-        javax.swing.GroupLayout EditListingPageAdminLayout = new javax.swing.GroupLayout(EditListingPageAdmin.getContentPane());
-        EditListingPageAdmin.getContentPane().setLayout(EditListingPageAdminLayout);
-        EditListingPageAdminLayout.setHorizontalGroup(
-            EditListingPageAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EditListingPageAdminLayout.createSequentialGroup()
+        javax.swing.GroupLayout EditListingPageManagerLayout = new javax.swing.GroupLayout(EditListingPageManager.getContentPane());
+        EditListingPageManager.getContentPane().setLayout(EditListingPageManagerLayout);
+        EditListingPageManagerLayout.setHorizontalGroup(
+            EditListingPageManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EditListingPageManagerLayout.createSequentialGroup()
                 .addContainerGap(382, Short.MAX_VALUE)
                 .addComponent(BackAEditListings, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
-        EditListingPageAdminLayout.setVerticalGroup(
-            EditListingPageAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EditListingPageAdminLayout.createSequentialGroup()
+        EditListingPageManagerLayout.setVerticalGroup(
+            EditListingPageManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EditListingPageManagerLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(BackAEditListings)
                 .addContainerGap(326, Short.MAX_VALUE))
@@ -740,14 +743,16 @@ String usertype = "Regular";
 
     private void LoginHomeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
         GoLogin();
-    }                                               
+    }
 
-    private void RegisterRegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                       
+
+
+    /*private void RegisterNewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
         usertype=ComboRegisterBox.getSelectedItem()+"";
         GoRMain();
        
         // System.out.println("Account type: "+ComboRegisterBox.getSelectedItem());
-    }                                                      
+    }       */
 
     private void ComboRegisterBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                 
        
@@ -795,12 +800,12 @@ String usertype = "Regular";
        EditListingPageLandlord.pack();   
     }                                                    
 
-    private void GoMainPageAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+    private void GoMainPageManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {
         GoAMain();
     }                                                     
 
-    private void EditListingsAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                        
-     AdminDashboardPage.setVisible(false);
+    private void EditListingsManagerButtonActionPerformed(java.awt.event.ActionEvent evt) {
+     ManagerDashboardPage.setVisible(false);
      EditListingPageLandlord.setVisible(true);
      EditListingPageLandlord.pack();
     }                                                       
@@ -826,7 +831,7 @@ String usertype = "Regular";
     }                                          
 
     private void BackAEditListingsActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-        GoBackADash(EditListingPageAdmin);
+        GoBackADash(EditListingPageManager);
     }                                                 
      private void GoLogin(){
            this.setVisible(false);
@@ -836,8 +841,8 @@ String usertype = "Regular";
       
       private void GoBackADash(javax.swing.JFrame page){
            page.setVisible(false);
-             AdminDashboardPage.pack();
-              AdminDashboardPage.setVisible(true);
+             ManagerDashboardPage.pack();
+              ManagerDashboardPage.setVisible(true);
      }
        private void GoBackLDash(javax.swing.JFrame page){
            page.setVisible(false);
@@ -856,9 +861,9 @@ String usertype = "Regular";
             if(usertype.equals("Landlord")){
                 LandlordDashboardPage.pack();
                 LandlordDashboardPage.setVisible(true);
-            }else if(usertype.equals("Admin")){
-                  AdminDashboardPage.pack();
-                AdminDashboardPage.setVisible(true);
+            }else if(usertype.equals("Manager")){
+                  ManagerDashboardPage.pack();
+                ManagerDashboardPage.setVisible(true);
             }else{
                 MainPage.pack();
        MainPage.setVisible(true);
@@ -866,22 +871,22 @@ String usertype = "Regular";
        
       
       }
-        private void GoRMain(){
+        public void GoRMain(){
        RegisterPage.setVisible(false);
       
        if(usertype.equals("Landlord")){
                 LandlordDashboardPage.pack();
                 LandlordDashboardPage.setVisible(true);
-            }else if(usertype.equals("Admin")){
-                  AdminDashboardPage.pack();
-                AdminDashboardPage.setVisible(true);
+            }else if(usertype.equals("Manager")){
+                  ManagerDashboardPage.pack();
+                ManagerDashboardPage.setVisible(true);
             }else{
                 MainPage.pack();
        MainPage.setVisible(true);
             }
       }
         private void GoAMain(){
-       AdminDashboardPage.setVisible(false);
+       ManagerDashboardPage.setVisible(false);
       
        MainPage.pack();
        MainPage.setVisible(true);
@@ -889,7 +894,7 @@ String usertype = "Regular";
       }
     private void LoginCheck(){
         boolean status = false;
-        String Utemp = "admin";
+        String Utemp = "Manager";
         String Ptemp = "password";
           
         System.out.println("Username Field: "+UsernameField.getText());
@@ -910,7 +915,7 @@ String usertype = "Regular";
         }else{
              ResultText.setText("Invalid Credentials");
                ResultText.setForeground(Color.RED);
-    }
+        }
     }
     /**
      * @param args the command line arguments
@@ -950,28 +955,96 @@ String usertype = "Regular";
         });
     }
 
-    // Variables declaration - do not modify                     
+    //getters and setters
+
+    //FOR REGISTRATION
+    public String getPasswordRegisterField() {
+        return String.valueOf(PasswordRegisterField.getPassword());
+    }
+
+    public String getEmailRegisterField() {
+        return EmailRegisterField.getText();
+    }
+
+    public int getComboRegisterBox() {
+        String type = Objects.requireNonNull(ComboRegisterBox.getSelectedItem()).toString();
+        switch (type) {
+            case "Landlord" -> {
+                return 2;
+            }
+            case "Renter" -> {
+                return 1;
+            }
+            case "Manager" -> {
+                return 3;
+            }
+        }
+        return 0;
+    }
+
+    public JButton getRegisterNewUserButton() {
+        return RegisterNewUserButton;
+    }
+
+    //FOR LOGGGING IN
+
+
+
+
+    public String getPasswordField() {
+        return String.valueOf(PasswordField.getPassword());
+    }
+
+    public String getUsernameField() {
+        return UsernameField.getText();
+    }
+
+    public void successfulLogin(){
+        ResultText.setText("Login Successful");
+        ResultText.setForeground(Color.BLUE);
+        // dispose();
+        LoginPage.setVisible(false);
+        MainPage.pack();
+        MainPage.setVisible(true);
+    }
+
+    public void failedLogin(){
+        ResultText.setText("Invalid Credentials");
+        ResultText.setForeground(Color.RED);
+    }
+
+    public JButton getLoginButton() {
+        return LoginButton;
+    }
+
+    //EXTRA
+    public void throwError(String error){
+        JOptionPane.showMessageDialog(this,error);
+    }
+
+    // Variables declaration - do not modify
+
     private javax.swing.JLabel AccountRegisterType;
     private javax.swing.JFrame AddPropertyPage;
-    private javax.swing.JFrame AdminDashboardPage;
-    private javax.swing.JLabel AdminDashboardText;
+    private javax.swing.JFrame ManagerDashboardPage;
+    private javax.swing.JLabel ManagerDashboardText;
     private javax.swing.JButton BackAEditListings;
     private javax.swing.JButton BackFees;
     private javax.swing.JButton BackLAddProp;
     private javax.swing.JButton BackLEditListing;
     private javax.swing.JButton BackLPayFees;
     private javax.swing.JFrame ChangeFeesPage;
-    private javax.swing.JButton ChnageFeesButton;
+    private javax.swing.JButton ChangeFeesButton;
     private javax.swing.JComboBox<String> ComboRegisterBox;
-    private javax.swing.JFrame EditListingPageAdmin;
+    private javax.swing.JFrame EditListingPageManager;
     private javax.swing.JFrame EditListingPageLandlord;
-    private javax.swing.JButton EditListingsAdminButton;
+    private javax.swing.JButton EditListingsManagerButton;
     private javax.swing.JButton EditListingsLandlord;
     private javax.swing.JTextField EmailRegisterField;
     private javax.swing.JLabel EmailRegisterText;
     private javax.swing.JToggleButton EnterHomeButton;
     private javax.swing.JCheckBox FurnishedBox;
-    private javax.swing.JButton GoMainPageAdminButton;
+    private javax.swing.JButton GoMainPageManagerButton;
     private javax.swing.JFrame LandlordDashboardPage;
     private javax.swing.JLabel LandlordDashboardTitle;
     private javax.swing.JButton LoginButton;
@@ -1001,7 +1074,7 @@ String usertype = "Regular";
     private javax.swing.JToggleButton RegisterHomeButton;
     private javax.swing.JFrame RegisterPage;
     private javax.swing.JButton RegisterPropertyLandlord;
-    private javax.swing.JButton RegisterRegisterButton;
+    private javax.swing.JButton RegisterNewUserButton;
     private javax.swing.JLabel RegisterTitle;
     private javax.swing.JButton RequestSummmaryButton;
     private javax.swing.JButton ResetButton;
@@ -1014,5 +1087,6 @@ String usertype = "Regular";
     private javax.swing.JLabel WelcomeText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    // End of variables declaration                   
+    // End of variables declaration
+
 }
