@@ -2,7 +2,7 @@ package database.users;
 
 public class RegisteredRenter extends RegisteredUser{
 
-    public RegisteredRenter(String email, String name, String password) {
-        super(email, name, password, 1);
+    public RegisteredRenter(String email, String password) {
+        super(email, password, 1);
     }
 }
