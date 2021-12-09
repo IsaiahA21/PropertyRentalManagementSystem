@@ -27,6 +27,8 @@ public class DatabaseModel {
     private MongoDatabase database;
     private MongoCollection<Document> userCollection;
     private MongoCollection<Document> propertiesCollection;
+    private MongoCollection<Document> emailCollection;
+    private MongoCollection<Document> paymentDetails;
 
 
     public DatabaseModel(){
@@ -50,11 +52,19 @@ public class DatabaseModel {
             database = mongoClient.getDatabase("PRMS");
             propertiesCollection = database.getCollection("properties");
             userCollection = database.getCollection("users");
-            addProperty("dave@gmail.com",2,4,false,"condo",20000);
+            paymentDetails = database.getCollection("paymentdetails");
+            emailCollection = database.getCollection("emails");
+
+            //addProperty("dave@gmail.com",2,4,false,"condo",20000);
             /*addUser(1,"jacob@gmail.com","password12");
             addUser(2,"dave@gmail.com","pass12");
             addUser(3,"stuart@gmail.com","managerpass");
-*/
+            */
+
+
+            /*Document sysDetailsTemp = new Document("PERIOD",30).append("PERIODSTART", "2001-12-09");
+            paymentDetails.insertOne(sysDetailsTemp);*/
+            PaymentControl pc = new PaymentControl(propertiesCollection,paymentDetails);
 
         }catch (MongoException me){
             System.err.println("database error");
@@ -136,12 +146,6 @@ public class DatabaseModel {
     public static Document convertUser(RegisteredUser user){
         return new Document("_id", new ObjectId()).append("TYPE",user.getAccessLevel()).append("EMAIL", user.getEmail()).append("PASSWORD",user.getPassword());
     }
-
-
-
-
-
-
 
 
 }
