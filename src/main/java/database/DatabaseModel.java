@@ -74,10 +74,13 @@ public class DatabaseModel {
 
 
     }
+    boolean hasAccess(int requiredAccessLevel){
+        return user.getAccessLevel() == requiredAccessLevel;
+    }
 
 
     public void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
-
+        hasAccess(2);
         propertiesCollection.insertOne(convertProperty(new Property(new ObjectId().toString(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
     }
 
