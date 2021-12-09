@@ -14,7 +14,6 @@ import database.properties.*;
 import database.users.*;
 import org.bson.types.ObjectId;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +27,8 @@ public class DatabaseModel {
     private MongoDatabase database;
     private MongoCollection<Document> userCollection;
     private MongoCollection<Document> propertiesCollection;
+    private MongoCollection<Document> emailCollection;
+    private MongoCollection<Document> paymentDetails;
 
 
     public DatabaseModel(){
@@ -35,12 +36,6 @@ public class DatabaseModel {
 
 
         connectToDatabase();
-
-        user = login("jacob@gmail.com","password12");
-        if(user.getAccessLevel() != 0) {
-            RegisteredUser temp = (RegisteredUser) user;
-            System.out.println("logged in as " + temp.getName());
-        }
 
 
 
@@ -51,36 +46,35 @@ public class DatabaseModel {
         Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
         mongoLogger.setLevel(Level.SEVERE);
 
-        String uri = "mongodb+srv://jacob_artuso:123pass123@prms.vrama.mongodb.net/prms?retryWrites=true&w=majority";
+        String uri = "mongodb+srv://jacob_artuso:123pass123@prms.vrama.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
         try {
             mongoClient = MongoClients.create(uri);
             database = mongoClient.getDatabase("PRMS");
             propertiesCollection = database.getCollection("properties");
             userCollection = database.getCollection("users");
-            /*addProperty("dave@gmail.com",2,4,false,"condo",20000);
+            paymentDetails = database.getCollection("paymentdetails");
+            emailCollection = database.getCollection("emails");
 
-            addProperty("dave@gmail.com",3,2,true,"condo",20000);
+            //addProperty("dave@gmail.com",2,4,false,"condo",20000);
+            /*addUser(1,"jacob@gmail.com","password12");
+            addUser(2,"dave@gmail.com","pass12");
+            addUser(3,"stuart@gmail.com","managerpass");
+            */
 
-            addProperty("dave@gmail.com",2,4,false,"townhouse",29000);*/
-            addUser(1,"jacob@gmail.com","Jacob Art","password12");
-            addUser(2,"dave@gmail.com","Dave Duart","pass12");
-            addUser(3,"stuart@gmail.com","Stuart Lee","managerpass");
 
+            /*Document sysDetailsTemp = new Document("PERIOD",30).append("PERIODSTART", "2001-12-09");
+            paymentDetails.insertOne(sysDetailsTemp);*/
+            PaymentControl pc = new PaymentControl(propertiesCollection,paymentDetails);
 
         }catch (MongoException me){
             System.err.println("database error");
-            System.exit(-1);
         }
 
 
     }
-    boolean hasAccess(int requiredAccessLevel){
-        return user.getAccessLevel() == requiredAccessLevel;
-    }
 
+    void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
 
-    public void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
-        hasAccess(2);
         propertiesCollection.insertOne(convertProperty(new Property(new ObjectId().toString(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
     }
 
@@ -89,11 +83,7 @@ public class DatabaseModel {
 
     }
 
-    public void setUser(String email, String password) {
-        this.user = login(email,password);
-    }
-
-    private User login(String email, String password){
+    public boolean login(String email, String password){
         //verify with database
         Document query = new Document("$and", Arrays.asList(
                 new Document("EMAIL", email),
@@ -104,17 +94,20 @@ public class DatabaseModel {
         if (user != null) {
             switch ((int) user.get("TYPE")) {
                 case 1 -> {
-                    return new RegisteredRenter((String) user.get("EMAIL"), (String) user.get("NAME"), (String) user.get("PASSWORD"));
+                    this.user = new RegisteredRenter((String) user.get("EMAIL"), (String) user.get("PASSWORD"));
+                    return true;
                 }
                 case 2 -> {
-                    return new Landlord((String) user.get("EMAIL"), (String) user.get("NAME"), (String) user.get("PASSWORD"));
+                    this.user = new Landlord((String) user.get("EMAIL"), (String) user.get("PASSWORD"));
+                    return true;
                 }
                 case 3 -> {
-                    return new Manager((String) user.get("EMAIL"), (String) user.get("NAME"), (String) user.get("PASSWORD"));
+                    this.user = new Manager((String) user.get("EMAIL"), (String) user.get("PASSWORD"));
+                    return true;
                 }
             }
         }
-        return null;
+        return false;
     }
 
     boolean userExists(String email){
@@ -126,42 +119,33 @@ public class DatabaseModel {
         user = new RegularRenter();
     }
 
-    public ArrayList<Property> search(ArrayList<String> criteriaStrings){
-        List<Document> criteria = new ArrayList<>();
-        //criteria.add(new Document(""))
-        Document search = new Document("$and",criteria);
+    public ArrayList<Property> search(){
         return new ArrayList<>();
     }
 
-    public void addUser(int accessLevel, String email, String name, String password){
+    public boolean addUser(int accessLevel, String email, String password){
         if(userExists(email)){
-            return;
+            return false;
         }
         switch (accessLevel){
             case 0:
-                return;
+                return false;
             case 1:
-                user = new RegisteredRenter(email,name,password);
+                user = new RegisteredRenter(email,password);
                 break;
             case 2:
-                user = new Landlord(email,name,password);
+                user = new Landlord(email,password);
                 break;
             case 3:
-                user = new Manager(email,name,password);
+                user = new Manager(email,password);
         }
         userCollection.insertOne(convertUser((RegisteredUser) user));
+        return true;
     }
 
     public static Document convertUser(RegisteredUser user){
-        return new Document("_id", new ObjectId()).append("TYPE",user.getAccessLevel()).append("NAME",user.getName()).append("EMAIL", user.getEmail()).append("PASSWORD",user.getPassword());
+        return new Document("_id", new ObjectId()).append("TYPE",user.getAccessLevel()).append("EMAIL", user.getEmail()).append("PASSWORD",user.getPassword());
     }
-
-
-
-
-
-
-
 
 
 }
