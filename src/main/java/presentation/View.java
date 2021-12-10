@@ -21,8 +21,8 @@ import javax.swing.table.*;
 public class View extends javax.swing.JFrame {
 
         Object[] data = {
-                        5, 6,
-                        "good", true, 105.78
+                        new Integer(5), 6,
+                        "good", new Boolean(false), new Double(105.78)
 
         };
 
@@ -33,11 +33,14 @@ public class View extends javax.swing.JFrame {
          * Creates new form View
          */
         public View() {
+                // change variable named SummaryText to the summary string controlf
 
+                // regiter property by a landlord variable:
+                // NumbBathroomField,NumbBedSpinner,QuadrantInputBox,PropTypeNewPropField,PriceField,
                 initComponents();
 
                 for (int i = 0; i < 5; i++) {
-                        setRecords(data);
+                        setRecordsMain(data);
                 }
 
         }
@@ -80,8 +83,6 @@ public class View extends javax.swing.JFrame {
                 BalanceFieldText = new javax.swing.JLabel();
                 EditListingPageLandlord = new javax.swing.JFrame();
                 BackLEditListing = new javax.swing.JButton();
-                jPanel1 = new javax.swing.JPanel();
-                jLabel1 = new javax.swing.JLabel();
                 RegisterPage = new javax.swing.JFrame();
                 RegisterTitle = new javax.swing.JLabel();
                 EmailRegisterField = new javax.swing.JTextField();
@@ -120,15 +121,18 @@ public class View extends javax.swing.JFrame {
                 ResetButton = new javax.swing.JButton();
                 EditListingPageAdmin = new javax.swing.JFrame();
                 BackAEditListings = new javax.swing.JButton();
+                ScrollPaneAdmin = new javax.swing.JScrollPane();
+                TableAdmin = new javax.swing.JTable();
                 SummaryPage = new javax.swing.JFrame();
                 BackSummaryButton = new javax.swing.JButton();
+                SummaryText = new javax.swing.JLabel();
                 LoginHomeButton = new javax.swing.JToggleButton();
                 RegisterHomeButton = new javax.swing.JToggleButton();
                 EnterHomeButton = new javax.swing.JToggleButton();
                 WelcomeText = new javax.swing.JLabel();
 
                 PropietyTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-                PropietyTitle.setText("Propieties");
+                PropietyTitle.setText("Properties");
 
                 ViewMainButton.setText("View");
                 ViewMainButton.addActionListener(new java.awt.event.ActionListener() {
@@ -161,29 +165,13 @@ public class View extends javax.swing.JFrame {
                         }
                 });
                 ScrollPaneMain.setViewportView(TableMain);
+                TableMain.getColumnModel().getSelectionModel()
+                                .setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
                 javax.swing.GroupLayout MainPageLayout = new javax.swing.GroupLayout(MainPage.getContentPane());
                 MainPage.getContentPane().setLayout(MainPageLayout);
                 MainPageLayout.setHorizontalGroup(
                                 MainPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(MainPageLayout.createSequentialGroup()
-                                                                .addGroup(MainPageLayout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addGroup(MainPageLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addGap(35, 35, 35)
-                                                                                                .addComponent(PropietyTitle,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                107,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                .addGroup(MainPageLayout
-                                                                                                .createSequentialGroup()
-                                                                                                .addGap(19, 19, 19)
-                                                                                                .addComponent(ScrollPaneMain,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                613,
-                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                                .addContainerGap(57, Short.MAX_VALUE))
                                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainPageLayout
                                                                 .createSequentialGroup()
                                                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -191,17 +179,29 @@ public class View extends javax.swing.JFrame {
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 73,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(110, 110, 110)));
+                                                                .addGap(110, 110, 110))
+                                                .addGroup(MainPageLayout.createSequentialGroup()
+                                                                .addGap(19, 19, 19)
+                                                                .addGroup(MainPageLayout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(PropietyTitle,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                107,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(ScrollPaneMain,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                613,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addContainerGap(57, Short.MAX_VALUE)));
                 MainPageLayout.setVerticalGroup(
                                 MainPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(MainPageLayout.createSequentialGroup()
-                                                                .addGap(29, 29, 29)
+                                                                .addGap(17, 17, 17)
                                                                 .addComponent(PropietyTitle,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 34,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGap(18, 18, 18)
                                                                 .addComponent(ScrollPaneMain,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 348,
@@ -419,6 +419,11 @@ public class View extends javax.swing.JFrame {
                 });
 
                 DepositButton.setText("Deposit");
+                DepositButton.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                DepositButtonActionPerformed(evt);
+                        }
+                });
 
                 Balancetext.setText("Pending Balance");
 
@@ -508,31 +513,6 @@ public class View extends javax.swing.JFrame {
                         }
                 });
 
-                jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-                jLabel1.setText("Property thigs here");
-
-                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-                jPanel1.setLayout(jPanel1Layout);
-                jPanel1Layout.setHorizontalGroup(
-                                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addGap(36, 36, 36)
-                                                                .addComponent(jLabel1,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                106,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(151, Short.MAX_VALUE)));
-                jPanel1Layout.setVerticalGroup(
-                                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addGap(21, 21, 21)
-                                                                .addComponent(jLabel1,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                24,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(129, Short.MAX_VALUE)));
-
                 javax.swing.GroupLayout EditListingPageLandlordLayout = new javax.swing.GroupLayout(
                                 EditListingPageLandlord.getContentPane());
                 EditListingPageLandlord.getContentPane().setLayout(EditListingPageLandlordLayout);
@@ -543,27 +523,14 @@ public class View extends javax.swing.JFrame {
                                                                 EditListingPageLandlordLayout.createSequentialGroup()
                                                                                 .addContainerGap(528, Short.MAX_VALUE)
                                                                                 .addComponent(BackLEditListing)
-                                                                                .addContainerGap())
-                                                .addGroup(EditListingPageLandlordLayout.createSequentialGroup()
-                                                                .addGap(69, 69, 69)
-                                                                .addComponent(jPanel1,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)));
+                                                                                .addContainerGap()));
                 EditListingPageLandlordLayout.setVerticalGroup(
                                 EditListingPageLandlordLayout
                                                 .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(EditListingPageLandlordLayout.createSequentialGroup()
                                                                 .addContainerGap()
                                                                 .addComponent(BackLEditListing)
-                                                                .addGap(58, 58, 58)
-                                                                .addComponent(jPanel1,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addContainerGap(186, Short.MAX_VALUE)));
+                                                                .addContainerGap(440, Short.MAX_VALUE)));
 
                 RegisterTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
                 RegisterTitle.setText("Register");
@@ -735,6 +702,11 @@ public class View extends javax.swing.JFrame {
                 ChangeFeesTitle.setText("Change Fees");
 
                 Changefeesbutton.setText("Change");
+                Changefeesbutton.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                ChangefeesbuttonActionPerformed(evt);
+                        }
+                });
 
                 javax.swing.GroupLayout ChangeFeesPageLayout = new javax.swing.GroupLayout(
                                 ChangeFeesPage.getContentPane());
@@ -1062,6 +1034,34 @@ public class View extends javax.swing.JFrame {
                         }
                 });
 
+                TableAdmin.setModel(new javax.swing.table.DefaultTableModel(
+                                new Object[][] {
+
+                                },
+                                new String[] {
+                                                "Bedrooms", "Bathrooms", "Property Type", "Furnished", "Price"
+                                }) {
+                        Class[] types = new Class[] {
+                                        java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class,
+                                        java.lang.Boolean.class, java.lang.Double.class
+                        };
+                        boolean[] canEdit = new boolean[] {
+                                        true, false, false, false, false
+                        };
+
+                        public Class getColumnClass(int columnIndex) {
+                                return types[columnIndex];
+                        }
+
+                        public boolean isCellEditable(int rowIndex, int columnIndex) {
+                                return canEdit[columnIndex];
+                        }
+                });
+                TableAdmin.setColumnSelectionAllowed(true);
+                ScrollPaneAdmin.setViewportView(TableAdmin);
+                TableAdmin.getColumnModel().getSelectionModel()
+                                .setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
                 javax.swing.GroupLayout EditListingPageAdminLayout = new javax.swing.GroupLayout(
                                 EditListingPageAdmin.getContentPane());
                 EditListingPageAdmin.getContentPane().setLayout(EditListingPageAdminLayout);
@@ -1070,19 +1070,33 @@ public class View extends javax.swing.JFrame {
                                                 .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
                                                                 EditListingPageAdminLayout.createSequentialGroup()
-                                                                                .addContainerGap(382, Short.MAX_VALUE)
+                                                                                .addContainerGap(534, Short.MAX_VALUE)
                                                                                 .addComponent(BackAEditListings,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                 73,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addGap(18, 18, 18)));
+                                                                                .addGap(18, 18, 18))
+                                                .addGroup(EditListingPageAdminLayout.createSequentialGroup()
+                                                                .addGap(41, 41, 41)
+                                                                .addComponent(ScrollPaneAdmin,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                535,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)));
                 EditListingPageAdminLayout.setVerticalGroup(
                                 EditListingPageAdminLayout
                                                 .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(EditListingPageAdminLayout.createSequentialGroup()
                                                                 .addGap(14, 14, 14)
                                                                 .addComponent(BackAEditListings)
-                                                                .addContainerGap(326, Short.MAX_VALUE)));
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(ScrollPaneAdmin,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                280,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addContainerGap(74, Short.MAX_VALUE)));
 
                 BackSummaryButton.setText("Back");
                 BackSummaryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -1090,6 +1104,8 @@ public class View extends javax.swing.JFrame {
                                 BackSummaryButtonActionPerformed(evt);
                         }
                 });
+
+                SummaryText.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
 
                 javax.swing.GroupLayout SummaryPageLayout = new javax.swing.GroupLayout(SummaryPage.getContentPane());
                 SummaryPage.getContentPane().setLayout(SummaryPageLayout);
@@ -1102,13 +1118,26 @@ public class View extends javax.swing.JFrame {
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 73,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(14, 14, 14)));
+                                                                .addGap(14, 14, 14))
+                                                .addGroup(SummaryPageLayout.createSequentialGroup()
+                                                                .addGap(72, 72, 72)
+                                                                .addComponent(SummaryText,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                239,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)));
                 SummaryPageLayout.setVerticalGroup(
                                 SummaryPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(SummaryPageLayout.createSequentialGroup()
                                                                 .addGap(16, 16, 16)
                                                                 .addComponent(BackSummaryButton)
-                                                                .addContainerGap(256, Short.MAX_VALUE)));
+                                                                .addGap(36, 36, 36)
+                                                                .addComponent(SummaryText,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                150,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addContainerGap(70, Short.MAX_VALUE)));
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1301,6 +1330,17 @@ public class View extends javax.swing.JFrame {
                 // TODO add your handling code here:
         }
 
+        private void ChangefeesbuttonActionPerformed(java.awt.event.ActionEvent evt) {
+                // Call function to change fees from managers here jacob
+
+        }
+
+        private void DepositButtonActionPerformed(java.awt.event.ActionEvent evt) {
+
+                // call function to deposit money towards a landlord fee here jacob
+                // BalanceFieldText should be set to the balance remaining
+        }
+
         private void GoLogin() {
                 this.setVisible(false);
                 LoginPage.pack();
@@ -1364,7 +1404,7 @@ public class View extends javax.swing.JFrame {
 
         }
 
-        public void setRecords(Object[] data) {
+        public void setRecordsMain(Object[] data) {
                 model = (DefaultTableModel) TableMain.getModel();
                 model.addRow(data);
         }
@@ -1506,15 +1546,16 @@ public class View extends javax.swing.JFrame {
         private javax.swing.JButton ResetButton;
         private javax.swing.JButton ResetRegisterButton;
         private javax.swing.JLabel ResultText;
+        private javax.swing.JScrollPane ScrollPaneAdmin;
         private javax.swing.JScrollPane ScrollPaneMain;
         private javax.swing.JFrame SummaryPage;
+        private javax.swing.JLabel SummaryText;
+        private javax.swing.JTable TableAdmin;
         private javax.swing.JTable TableMain;
         private javax.swing.JTextField UsernameField;
         private javax.swing.JLabel UsernameText;
         private javax.swing.JButton ViewMainButton;
         private javax.swing.JLabel WelcomeText;
-        private javax.swing.JLabel jLabel1;
-        private javax.swing.JPanel jPanel1;
         // End of variables declaration
 
         // FOR REGISTRATION
