@@ -1,11 +1,9 @@
 package database;
 
 import com.mongodb.MongoException;
+import com.mongodb.client.*;
 import org.bson.Document;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+
 import static com.mongodb.client.model.Filters.eq;
 
 
@@ -26,6 +24,7 @@ public class DatabaseModel {
     private MongoCollection<Document> propertiesCollection;
     private MongoCollection<Document> emailCollection;
     private MongoCollection<Document> paymentDetails;
+    PaymentControl pc;
 
 
     public DatabaseModel(){
@@ -52,7 +51,7 @@ public class DatabaseModel {
             paymentDetails = database.getCollection("paymentdetails");
             emailCollection = database.getCollection("emails");
 
-            addProperty("dave@gmail.com",2,4,false,"condo",20000);
+            //addProperty("dave@gmail.com",2,4,false,"condo",20000);
             /*addUser(1,"jacob@gmail.com","password12");
             addUser(2,"dave@gmail.com","pass12");
             addUser(3,"stuart@gmail.com","managerpass");
@@ -61,7 +60,7 @@ public class DatabaseModel {
 
 
 
-            PaymentControl pc = new PaymentControl(propertiesCollection,paymentDetails);
+            pc = new PaymentControl(propertiesCollection,paymentDetails);
 
         }catch (MongoException me){
             System.err.println("database error");
@@ -70,6 +69,9 @@ public class DatabaseModel {
 
     }
 
+    public PaymentControl getPc() {
+        return pc;
+    }
 
     <T> void editProperty(String toEdit, T setTo){
         switch (toEdit){
@@ -104,7 +106,12 @@ public class DatabaseModel {
                     return true;
                 }
                 case 2: {
-                    this.user = new Landlord((String) user.get("EMAIL"), (String) user.get("PASSWORD"));
+                    MongoCursor<Document> cursor = propertiesCollection.find(eq("LANDLORD",(String) user.get("EMAIL"))).iterator();
+                    ArrayList<ObjectId> propIds = new ArrayList<>();
+                    while(cursor.hasNext()) {
+                        propIds.add((ObjectId) cursor.next().get("_id"));
+                    }
+                    this.user = new Landlord((String) user.get("EMAIL"), (String) user.get("PASSWORD"),propIds);
                     return true;
                 }
                 case 3: {
@@ -143,7 +150,7 @@ public class DatabaseModel {
                 user = new RegisteredRenter(email,password);
                 break;
             case 2:
-                user = new Landlord(email,password);
+                user = new Landlord(email,password,new ArrayList<>());
                 break;
             case 3:
                 user = new Manager(email,password);

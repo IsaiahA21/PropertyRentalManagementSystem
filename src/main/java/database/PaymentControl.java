@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,20 @@ public class PaymentControl {
         }
 
     }
+
+    public boolean payForProperty(double amountPayed, ObjectId id){
+        double outstandingFee = getOutstandingFee(id) - amountPayed;
+        Bson temp = Updates.set("OUTSTANDINGFEE", outstandingFee);
+        propertiesCollection.updateOne(eq("_id",id),temp);
+        return true;
+    }
+
+    public double getOutstandingFee(ObjectId id){
+        Document prop = propertiesCollection.find(eq("_id",id)).first();
+        assert prop != null;
+        return prop.getDouble("OUTSTANDINGFEE");
+    }
+
     void resetPayment(){
 
 
@@ -54,6 +69,8 @@ public class PaymentControl {
         propertiesCollection.updateMany(exists("OUTSTANDINGFEE"), periodUpdate);
 
     }
+
+
     void setPeriod(Date setTo){
         currentPeriodStart = setTo;
     }
