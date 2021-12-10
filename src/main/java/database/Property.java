@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 
 public class Property {
     private ObjectId propertyID;
-    private int status;//0 not shown, 1 payed for (shown)
+    private int status;// 0 not shown, 1 payed for (shown)
     private String landlord;
     private boolean payedFor;
     private double outstandingFee;
@@ -29,7 +29,7 @@ public class Property {
         this.price = price;
         status = 0;
         payedFor = false;
-        outstandingFee = 100; //should change how this works maybe stored in database
+        outstandingFee = 100; // should change how this works maybe stored in database
     }
 
     public Property(Document prop) {
