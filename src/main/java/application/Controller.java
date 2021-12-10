@@ -1,11 +1,16 @@
 package application;
 
 import database.DatabaseModel;
+import database.Property;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import presentation.View;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Controller {
@@ -18,9 +23,28 @@ public class Controller {
         view.getRegisterNewUserButton().addActionListener(new RegisterButton());
         view.getLoginButton().addActionListener(new LoginButton());
 
+        //view.getSearchButton().addActionListener(new SearchButton());
 
     }
 
+    public class SearchButton implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //TODO getters for search criteria
+            //EXAMPLE
+            List<Document> criterias = new ArrayList<>();
+            criterias.add(new Document("NUMBEDROOMS",3));
+            criterias.add(new Document("FURNISHED",true));
+            Document criteria = new Document("$and", criterias);
+            //SEARCH DATABASE
+            ArrayList<Property> props = model.search(criteria);
+            //TODO display properties in view
+
+
+
+
+        }
+    }
     //for registration of an account
     public class RegisterButton implements ActionListener{
         @Override
@@ -55,26 +79,4 @@ public class Controller {
             }
         }
     }
-
-
-   /* public class ButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent ae){
-            //talk to model here to get results
-            view.setTestField("hello there");
-            System.out.println("button was pressed");
-        }
-    }
-    public class loginButton implements ActionListener{
-        public void actionPerformed(ActionEvent ae){
-            String email = "jacob@gmail.com";//we should retrieve from view
-            String password = "password12";//we should also retrive from view
-
-            model.setUser(email,password);
-        }
-    }
-    public class skipLoginButton implements ActionListener{
-        public void actionPerformed(ActionEvent ae){
-            model.unregistedLogin();
-        }
-    }*/
 }

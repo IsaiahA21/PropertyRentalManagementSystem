@@ -1,7 +1,10 @@
 package database;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
 public class Property {
-    private String propertyID;
+    private ObjectId propertyID;
     private int status;//0 not shown, 1 payed for (shown)
     private String landlord;
     private boolean payedFor;
@@ -14,7 +17,7 @@ public class Property {
 
 
     //create a new property to add
-    public Property(String propertyID, String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
+    public Property(ObjectId propertyID, String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
         this.propertyID = propertyID;
         this.landlord = landlord;
         this.numBedrooms = numBedrooms;
@@ -25,8 +28,19 @@ public class Property {
         status = 0;
         payedFor = false;
         outstandingFee = 100; //should change how this works maybe stored in database
+    }
 
-
+    public Property(Document prop) {
+        this.propertyID = prop.getObjectId("_id");
+        this.status = prop.getInteger("STATUS");
+        this.landlord = prop.getString("LANDLORD");
+        this.payedFor = prop.getBoolean("PAYEDFOR");
+        this.outstandingFee = prop.getDouble("OUTSTANDINGFEE");
+        this.numBedrooms = prop.getInteger("NUMBEDROOMS");
+        this.numBathrooms = prop.getInteger("NUMBATHROOMS");
+        this.furnished = prop.getBoolean("FURNISHED");
+        this.propertyType = prop.getString("PROPERTYTYPE");
+        this.price = prop.getDouble("PRICE");
     }
 
     public int getNumBedrooms() {
@@ -53,11 +67,11 @@ public class Property {
         this.furnished = furnished;
     }
 
-    public String getPropertyID() {
+    public ObjectId getPropertyID() {
         return propertyID;
     }
 
-    public void setPropertyID(String propertyID) {
+    public void setPropertyID(ObjectId propertyID) {
         this.propertyID = propertyID;
     }
 
