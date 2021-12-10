@@ -80,8 +80,8 @@ public class DatabaseModel {
     }
 
 
-    public Report makeReport(){
-        return new Report(propertiesCollection);
+    public StringBuilder makeReport(){
+        return new Report(propertiesCollection).getTheReport();
     }
 
     public PaymentControl getPc() {

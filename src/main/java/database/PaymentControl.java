@@ -46,6 +46,10 @@ public class PaymentControl {
 
     }
 
+    void editFee(){
+
+    }
+
     public boolean payForProperty(double amountPayed, ObjectId id){
         double outstandingFee = getOutstandingFee(id) - amountPayed;
         Bson temp = Updates.set("OUTSTANDINGFEE", outstandingFee);

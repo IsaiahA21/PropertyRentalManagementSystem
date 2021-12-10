@@ -26,6 +26,21 @@ public class Controller {
         //view.getSearchButton().addActionListener(new SearchButton());
 
     }
+    //get the outstanding fee
+
+    //pay the fee for a house
+
+    //admin edit fee / period
+
+
+    public class GetReportButton implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            StringBuilder temp = model.makeReport();
+
+            //view.setText
+        }
+    }
+
 
     public class SearchButton implements ActionListener{
         @Override
