@@ -24,6 +24,7 @@ public class Controller {
         view.getLoginButton().addActionListener(new LoginButton());
 
         //view.getSearchButton().addActionListener(new SearchButton());
+    	view.getTheReportButton().addActionListener( new GetReportButton());
 
     }
     //get the outstanding fee
@@ -31,13 +32,14 @@ public class Controller {
     //pay the fee for a house
 
     //admin edit fee / period
-
+//    public void triggerReport() {
+//    }
 
     public class GetReportButton implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             StringBuilder temp = model.makeReport();
-
-            //view.setText
+            System.out.println("hello");
+            view.setSummaryText(temp.toString());
         }
     }
 

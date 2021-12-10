@@ -799,6 +799,7 @@ public class View extends javax.swing.JFrame {
                 RequestSummmaryButton.setText("Request Summary");
                 RequestSummmaryButton.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            System.out.println("request button pressed");
                                 RequestSummmaryButtonActionPerformed(evt);
                         }
                 });
@@ -1311,6 +1312,7 @@ public class View extends javax.swing.JFrame {
         private void RequestSummmaryButtonActionPerformed(java.awt.event.ActionEvent evt) {
                 AdminDashboardPage.setVisible(false);
                 SummaryPage.setVisible(true);
+                System.out.println("in request Summary");
                 SummaryPage.pack();
         }
 
@@ -1619,6 +1621,14 @@ public class View extends javax.swing.JFrame {
         // EXTRA
         public void throwError(String error) {
                 JOptionPane.showMessageDialog(this, error);
+        }
+        public JButton getTheReportButton() {
+        	// the method should be called by controller
+        	return RequestSummmaryButton; // returns the button to the controller
+        }
+        public void setSummaryText(String output) {
+        	System.out.println("in summary text, 3");
+        	SummaryText.setText(output);
         }
 
 }
