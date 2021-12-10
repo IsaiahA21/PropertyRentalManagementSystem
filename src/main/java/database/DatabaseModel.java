@@ -35,7 +35,7 @@ public class DatabaseModel {
 
         connectToDatabase();
 
-
+        makeReport();
 
         //System.out.println(test.getAccessLevel());
     }
@@ -50,10 +50,11 @@ public class DatabaseModel {
             database = mongoClient.getDatabase("PRMS");
             propertiesCollection = database.getCollection("properties");
             userCollection = database.getCollection("users");
-            addProperty("dave@gmail.com",2,4,false,"condo",20000);
+//            addProperty("isaiTry4@gmail.com",4,2,false,"townhome",400000, "WT");
             /*addUser(1,"jacob@gmail.com","password12");
             addUser(2,"dave@gmail.com","pass12");
             addUser(3,"stuart@gmail.com","managerpass");
+            
 */
 
         }catch (MongoException me){
@@ -63,16 +64,19 @@ public class DatabaseModel {
 
     }
 
-    void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
+    void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price, String quadrant) {
 
-        propertiesCollection.insertOne(convertProperty(new Property(new ObjectId().toString(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
+        propertiesCollection.insertOne(convertProperty(new Property(new ObjectId().toString(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price,quadrant)));
     }
 
     public static Document convertProperty(Property prop){
-        return new Document("_id", new ObjectId()).append("STATUS", prop.getStatus()).append("LANDLORD",prop.getLandlord()).append("PAYEDFOR", prop.isPayedFor()).append("OUTSTANDINGFEE", prop.getOutstandingFee()).append("NUMBEDROOMS", prop.getNumBedrooms()).append("NUMBATHROOMS", prop.getNumBathrooms()).append("FURNISHED",prop.isFurnished()).append("PROPERTYTPYE", prop.getPropertyType()).append("PRICE", prop.getPrice());
+        return new Document("_id", new ObjectId()).append("STATUS", prop.getStatus()).append("LANDLORD",prop.getLandlord()).append("PAYEDFOR", prop.isPayedFor()).append("OUTSTANDINGFEE", prop.getOutstandingFee()).append("NUMBEDROOMS", prop.getNumBedrooms()).append("NUMBATHROOMS", prop.getNumBathrooms()).append("FURNISHED",prop.isFurnished()).append("PROPERTYTPYE", prop.getPropertyType()).append("PRICE", prop.getPrice()).append("QUADRANT", prop.getQuadrant());
 
     }
 
+    public Report makeReport() {
+    	return new Report(propertiesCollection);
+    }
     public boolean login(String email, String password){
         //verify with database
         Document query = new Document("$and", Arrays.asList(

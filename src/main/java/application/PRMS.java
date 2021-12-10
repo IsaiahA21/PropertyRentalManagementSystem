@@ -4,6 +4,7 @@ import presentation.View;
 
 public class PRMS {
     public static void main(String [] args){
+    	System.out.println("hello again");
         View view = new View();
         DatabaseModel model = new DatabaseModel();
 

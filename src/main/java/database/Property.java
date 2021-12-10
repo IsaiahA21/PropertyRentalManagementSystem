@@ -1,8 +1,11 @@
-package database.properties;
+package database;
+
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public class Property {
-    private String propertyID;
-    private int status;//0 not shown, 1 payed for, 2 suspended?
+    private ObjectId propertyID;
+    private int status;//0 not shown, 1 payed for (shown)
     private String landlord;
     private boolean payedFor;
     private double outstandingFee;
@@ -15,7 +18,7 @@ public class Property {
 
 
     //create a new property to add
-    public Property(String propertyID, String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price, String quadrant) {
+    public Property(ObjectId propertyID, String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price,String quadrant) {
         this.propertyID = propertyID;
         this.landlord = landlord;
         this.numBedrooms = numBedrooms;
@@ -23,12 +26,25 @@ public class Property {
         this.furnished = furnished;
         this.propertyType = propertyType;
         this.price = price;
+        this.setQuadrant(quadrant);
         status = 0;
         payedFor = false;
         outstandingFee = 100; //should change how this works maybe stored in database
-        this.quadrant = quadrant;
+        
+    }
 
-
+    public Property(Document prop) {
+        this.propertyID = prop.getObjectId("_id");
+        this.status = prop.getInteger("STATUS");
+        this.landlord = prop.getString("LANDLORD");
+        this.payedFor = prop.getBoolean("PAYEDFOR");
+        this.outstandingFee = prop.getDouble("OUTSTANDINGFEE");
+        this.numBedrooms = prop.getInteger("NUMBEDROOMS");
+        this.numBathrooms = prop.getInteger("NUMBATHROOMS");
+        this.furnished = prop.getBoolean("FURNISHED");
+        this.propertyType = prop.getString("PROPERTYTYPE");
+        this.price = prop.getDouble("PRICE");
+        this.setQuadrant(prop.getString("QUADRANT"));
     }
 
     public int getNumBedrooms() {
@@ -55,11 +71,11 @@ public class Property {
         this.furnished = furnished;
     }
 
-    public String getPropertyID() {
+    public ObjectId getPropertyID() {
         return propertyID;
     }
 
-    public void setPropertyID(String propertyID) {
+    public void setPropertyID(ObjectId propertyID) {
         this.propertyID = propertyID;
     }
 
@@ -110,7 +126,7 @@ public class Property {
     public void setPrice(double price) {
         this.price = price;
     }
-    
+
 	public String getQuadrant() {
 		return quadrant;
 	}
