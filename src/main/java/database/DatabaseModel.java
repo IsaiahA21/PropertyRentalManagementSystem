@@ -51,11 +51,17 @@ public class DatabaseModel {
             paymentDetails = database.getCollection("paymentdetails");
             emailCollection = database.getCollection("emails");
 
-            //addProperty("dave@gmail.com",2,4,false,"condo",20000);
-            /*addUser(1,"jacob@gmail.com","password12");
-            addUser(2,"dave@gmail.com","pass12");
-            addUser(3,"stuart@gmail.com","managerpass");
-            */
+
+
+            //addProperty("NW",2,4,false,"condo",20000);
+            //addProperty("SE",2,4,false,"condo",20000);
+
+
+            //addUser(1,"jacob@gmail.com","password12");
+
+            //addUser(2,"jeffery@gmail.com","pass12");
+            //addUser(3,"stuart@gmail.com","managerpass");
+
 
 
 
@@ -69,6 +75,11 @@ public class DatabaseModel {
 
 
     }
+    boolean hasAccess(int requiredAccess){
+        return requiredAccess == user.getAccessLevel();
+    }
+
+
     public Report makeReport(){
         return new Report(propertiesCollection);
     }
@@ -84,13 +95,18 @@ public class DatabaseModel {
         }
     }
 
-    void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
+    void addProperty(String quadrant, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
+        if(!hasAccess(2)){
+            System.err.println("WRONG ACCESS TO ADD PROPERTY");
+            System.exit(-1);
+        }
+        RegisteredUser temp = (RegisteredUser) user;
 
-        propertiesCollection.insertOne(convertProperty(new Property(new ObjectId(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
+        propertiesCollection.insertOne(convertProperty(new Property(new ObjectId(),quadrant, temp.getEmail(), numBedrooms, numBathrooms, furnished, propertyType, price)));
     }
 
     public static Document convertProperty(Property prop){
-        return new Document("_id", new ObjectId()).append("STATUS", prop.getStatus()).append("LANDLORD",prop.getLandlord()).append("PAYEDFOR", prop.isPayedFor()).append("OUTSTANDINGFEE", prop.getOutstandingFee()).append("NUMBEDROOMS", prop.getNumBedrooms()).append("NUMBATHROOMS", prop.getNumBathrooms()).append("FURNISHED",prop.isFurnished()).append("PROPERTYTPYE", prop.getPropertyType()).append("PRICE", prop.getPrice());
+        return new Document("_id", new ObjectId()).append("STATUS", prop.getStatus()).append("LANDLORD",prop.getLandlord()).append("QUADRANT",prop.getQuadrant()).append("PAYEDFOR", prop.isPayedFor()).append("OUTSTANDINGFEE", prop.getOutstandingFee()).append("NUMBEDROOMS", prop.getNumBedrooms()).append("NUMBATHROOMS", prop.getNumBathrooms()).append("FURNISHED",prop.isFurnished()).append("PROPERTYTPYE", prop.getPropertyType()).append("PRICE", prop.getPrice());
 
     }
 
