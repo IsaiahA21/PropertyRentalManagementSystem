@@ -86,7 +86,7 @@ public class DatabaseModel {
 
     void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
 
-        propertiesCollection.insertOne(convertProperty(new Property(new ObjectId().toString(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
+        propertiesCollection.insertOne(convertProperty(new Property(new ObjectId(), landlord, numBedrooms, numBathrooms, furnished, propertyType, price)));
     }
 
     public static Document convertProperty(Property prop){
@@ -139,8 +139,12 @@ public class DatabaseModel {
     }
 
     public ArrayList<Property> search(Document criteria){
-
-        return new ArrayList<>();
+        ArrayList<Property> props = new ArrayList<>();
+        MongoCursor<Document> cursor = propertiesCollection.find(criteria).iterator();
+        while(cursor.hasNext()){
+            props.add(new Property(cursor.next()));
+        }
+        return props;
     }
 
     public boolean addUser(int accessLevel, String email, String password){

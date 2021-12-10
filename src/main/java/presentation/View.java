@@ -847,21 +847,21 @@ String usertype = "Regular";
       }
       
         private void GoMain(){
-            this.setVisible(false);
-         
-            if(usertype.equals("Landlord")){
-                LandlordDashboardPage.pack();
-                LandlordDashboardPage.setVisible(true);
-            }else if(usertype.equals("Manager")){
-                  ManagerDashboardPage.pack();
-                ManagerDashboardPage.setVisible(true);
-            }else{
-                MainPage.pack();
-       MainPage.setVisible(true);
-            }
-       
-      
-      }
+        this.setVisible(false);
+
+        if(usertype.equals("Landlord")){
+            LandlordDashboardPage.pack();
+            LandlordDashboardPage.setVisible(true);
+        }else if(usertype.equals("Manager")){
+            ManagerDashboardPage.pack();
+            ManagerDashboardPage.setVisible(true);
+        }else{
+            MainPage.pack();
+            MainPage.setVisible(true);
+        }
+
+
+        }
         public void GoRMain(){
        RegisterPage.setVisible(false);
       
@@ -988,6 +988,13 @@ String usertype = "Regular";
 
     public JButton getLoginButton() {
         return LoginButton;
+    }
+
+    //Skip login
+
+
+    public JToggleButton getEnterHomeButton() {
+        return EnterHomeButton;
     }
 
     //EXTRA
