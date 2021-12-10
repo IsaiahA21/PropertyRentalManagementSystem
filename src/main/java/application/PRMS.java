@@ -2,13 +2,19 @@ package application;
 import database.*;
 import presentation.View;
 
+import java.awt.*;
+
 public class PRMS {
     public static void main(String [] args){
-        View view = new View();
+
         DatabaseModel model = new DatabaseModel();
 
-        Controller controller = new Controller(model,view);
+        EventQueue.invokeLater(() -> {
+            View view = new View();
 
-        view.setVisible(true);
+            Controller controller = new Controller(model, view);
+
+            view.setVisible(true);
+        });
     }
 }
