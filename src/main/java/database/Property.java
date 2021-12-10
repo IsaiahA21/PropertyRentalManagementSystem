@@ -9,16 +9,17 @@ public class Property {
     private String landlord;
     private boolean payedFor;
     private double outstandingFee;
-
+    private String quadrant;
     private int numBedrooms;
     private int numBathrooms;
     private boolean furnished;
     private String propertyType;
     private double price;
 
-    // create a new property to add
-    public Property(ObjectId propertyID, String landlord, int numBedrooms, int numBathrooms, boolean furnished,
-            String propertyType, double price) {
+
+    //create a new property to add
+    public Property(ObjectId propertyID, String landlord,String quadrant, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
+        this.quadrant = quadrant;
         this.propertyID = propertyID;
         this.landlord = landlord;
         this.numBedrooms = numBedrooms;
@@ -122,5 +123,13 @@ public class Property {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getQuadrant() {
+        return quadrant;
+    }
+
+    public void setQuadrant(String quadrant) {
+        this.quadrant = quadrant;
     }
 }

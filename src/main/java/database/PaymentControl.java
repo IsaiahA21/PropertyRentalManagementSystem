@@ -59,6 +59,8 @@ public class PaymentControl {
         return prop.getDouble("OUTSTANDINGFEE");
     }
 
+
+
     void resetPayment(){
 
 
