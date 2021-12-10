@@ -729,11 +729,7 @@ String usertype = "Regular";
         // TODO add your handling code here:
     }                                             
 
-    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-        LoginCheck();
-        
-    }                                           
+
 
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
@@ -747,12 +743,7 @@ String usertype = "Regular";
 
 
 
-    /*private void RegisterNewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        usertype=ComboRegisterBox.getSelectedItem()+"";
-        GoRMain();
-       
-        // System.out.println("Account type: "+ComboRegisterBox.getSelectedItem());
-    }       */
+
 
     private void ComboRegisterBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                 
        
@@ -892,31 +883,7 @@ String usertype = "Regular";
        MainPage.setVisible(true);
             
       }
-    private void LoginCheck(){
-        boolean status = false;
-        String Utemp = "Manager";
-        String Ptemp = "password";
-          
-        System.out.println("Username Field: "+UsernameField.getText());
-        if(Utemp.equals(UsernameField.getText()) && Ptemp.equals(PasswordField.getText())){
-             status = true;
-        }
-        
-        if(status){
-            ResultText.setText("Login Successful");
-             ResultText.setForeground(Color.BLUE);
-            // dispose();
-             LoginPage.setVisible(false);
-             MainPage.pack();
-              MainPage.setVisible(true);
-          
-              
-             
-        }else{
-             ResultText.setText("Invalid Credentials");
-               ResultText.setForeground(Color.RED);
-        }
-    }
+
     /**
      * @param args the command line arguments
      */
@@ -955,6 +922,12 @@ String usertype = "Regular";
         });
     }
 
+    /*
+    SUBSCRIPTION{
+        NUMBEDROOM : 2
+
+     */
+
     //getters and setters
 
     //FOR REGISTRATION
@@ -969,13 +942,13 @@ String usertype = "Regular";
     public int getComboRegisterBox() {
         String type = Objects.requireNonNull(ComboRegisterBox.getSelectedItem()).toString();
         switch (type) {
-            case "Landlord" -> {
+            case "Landlord": {
                 return 2;
             }
-            case "Renter" -> {
+            case "Renter": {
                 return 1;
             }
-            case "Manager" -> {
+            case "Manager": {
                 return 3;
             }
         }

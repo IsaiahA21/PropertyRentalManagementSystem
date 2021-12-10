@@ -1,7 +1,6 @@
 package database;
 
 import com.mongodb.MongoException;
-import database.properties.Property;
 import org.bson.Document;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -10,13 +9,11 @@ import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 
 
-import database.properties.*;
 import database.users.*;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,15 +52,15 @@ public class DatabaseModel {
             paymentDetails = database.getCollection("paymentdetails");
             emailCollection = database.getCollection("emails");
 
-            //addProperty("dave@gmail.com",2,4,false,"condo",20000);
+            addProperty("dave@gmail.com",2,4,false,"condo",20000);
             /*addUser(1,"jacob@gmail.com","password12");
             addUser(2,"dave@gmail.com","pass12");
             addUser(3,"stuart@gmail.com","managerpass");
             */
 
 
-            /*Document sysDetailsTemp = new Document("PERIOD",30).append("PERIODSTART", "2001-12-09");
-            paymentDetails.insertOne(sysDetailsTemp);*/
+
+
             PaymentControl pc = new PaymentControl(propertiesCollection,paymentDetails);
 
         }catch (MongoException me){
@@ -71,6 +68,14 @@ public class DatabaseModel {
         }
 
 
+    }
+
+
+    <T> void editProperty(String toEdit, T setTo){
+        switch (toEdit){
+            case "propertyID":
+
+        }
     }
 
     void addProperty(String landlord, int numBedrooms, int numBathrooms, boolean furnished, String propertyType, double price) {
@@ -91,17 +96,18 @@ public class DatabaseModel {
         ));
         Document user = userCollection.find(query).first();
 
+
         if (user != null) {
             switch ((int) user.get("TYPE")) {
-                case 1 -> {
+                case 1: {
                     this.user = new RegisteredRenter((String) user.get("EMAIL"), (String) user.get("PASSWORD"));
                     return true;
                 }
-                case 2 -> {
+                case 2: {
                     this.user = new Landlord((String) user.get("EMAIL"), (String) user.get("PASSWORD"));
                     return true;
                 }
-                case 3 -> {
+                case 3: {
                     this.user = new Manager((String) user.get("EMAIL"), (String) user.get("PASSWORD"));
                     return true;
                 }
@@ -109,6 +115,8 @@ public class DatabaseModel {
         }
         return false;
     }
+
+
 
     boolean userExists(String email){
         Document query = new Document("EMAIL", email);
@@ -119,7 +127,8 @@ public class DatabaseModel {
         user = new RegularRenter();
     }
 
-    public ArrayList<Property> search(){
+    public ArrayList<Property> search(Document criteria){
+
         return new ArrayList<>();
     }
 

@@ -1,8 +1,8 @@
-package database.properties;
+package database;
 
 public class Property {
     private String propertyID;
-    private int status;//0 not shown, 1 payed for, 2 suspended?
+    private int status;//0 not shown, 1 payed for (shown)
     private String landlord;
     private boolean payedFor;
     private double outstandingFee;
