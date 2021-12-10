@@ -62,11 +62,15 @@ public class DatabaseModel {
 
             pc = new PaymentControl(propertiesCollection,paymentDetails);
 
+
         }catch (MongoException me){
             System.err.println("database error");
         }
 
 
+    }
+    public Report makeReport(){
+        return new Report(propertiesCollection);
     }
 
     public PaymentControl getPc() {
